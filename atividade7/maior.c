@@ -1,31 +1,19 @@
+#include "../entrada_inteiro.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include "biblioteca.h"
 
-int main(int argc, char* argv[]){
-
-int x, y, z;  
-int numeros[argc-1];  
-
-if(argc < 3){
-    printf("Informe 2 ou 3 argumentos inteiros");
-    return 1;
-}
-if(argc != 3 && argc != 4){
-x = atoi(argv[1]);
-y = atoi(argv[2]);
-    printf("%d", maior_2n(x, y));
-}else if(){
-x = atoi(argv[1]);
-y = atoi(argv[2]);
-z = atoi(argv[3]);           
-    printf("%d", maior_3n(x, y, z));
-}else{
-    for(int i = 0; i < argc - 1; i++){
-        numeros[i] = atoi(argv[i + 1]);    
+int main(int argc, char *argv[]) {
+    int maior, atual;
+    if (argc < 3 || !ler_inteiro(argv[1], &maior)) {
+        fprintf(stderr, "Informe pelo menos dois inteiros.\n");
+        return 1;
     }
-    printf("%d", maior_n(numeros, argc - 1))
-}
-
-    return 0;    
+    // O maior acumulado evita reservar um vetor apenas para percorrer os valores.
+    for (int i = 2; i < argc; i++) {
+        if (!ler_inteiro(argv[i], &atual))
+            return 1;
+        if (atual > maior)
+            maior = atual;
+    }
+    printf("%d\n", maior);
+    return 0;
 }

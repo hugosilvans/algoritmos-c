@@ -3,20 +3,18 @@
 
 #define MAX_TXT 256
 
-int main(int argc, char* argv[]){
-
+int main(int argc, char *argv[]) {
 
     char texto[MAX_TXT];
     FILE *arq = fopen(argv[1], "a");
-    
-    if(arq == NULL){
+
+    if (arq == NULL) {
         printf("erro ao abrir o arquivo");
         return 1;
     }
     strcat(texto, argv[2]);
     strcat(texto, "/n");
     fprintf(arq, texto);
-    
 
     fclose(arq);
 

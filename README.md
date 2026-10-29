@@ -22,3 +22,22 @@ Repositório de estudos acadêmicos, mantido como registro da minha aprendizagem
 ## Licença
 
 Consulte o arquivo [LICENSE](LICENSE).
+
+## Exemplos de linha de comando
+
+`funcao/primo.c` e `atividade6/verificar_numero_primo.c` aceitam `-primo inteiro` ou `-maior inteiro inteiro`. Os exemplos `maior.c` aceitam dois ou mais inteiros. Cada programa é compilado separadamente; não reúna arquivos com várias funções `main` no mesmo executável.
+
+```bash
+gcc -std=c11 funcao/primo.c -o primo
+./primo -primo 7
+gcc -std=c11 funcao/maior.c -o maior
+./maior 4 9 2
+```
+
+## Guia do código
+
+Consulte [GUIA_CODIGO.md](GUIA_CODIGO.md) para localizar os módulos, entender as convenções e estudar as alterações.
+
+## Verificação dos exercícios C/C++
+
+Com Python, GCC e G++ disponíveis, execute `python scripts/verificar_sintaxe.py`. A verificação trata cada fonte separadamente; ela não substitui a execução de exemplos nem a compilação dos projetos Java.

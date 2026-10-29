@@ -8,12 +8,11 @@ MODOS DE ABERTURA DE ARQUIVO
 'a' -> criar, se não existir, e adicionar ao final do arquivo
 */
 
+int main(int argc, char *argv[]) {
 
-int main(int argc, char* argv[]){
-    
     FILE *sexta = fopen("sexta.txt", "w");
-    
-    if(sexta == NULL){
+
+    if (sexta == NULL) {
         printf("erro ao abrir um arquivo");
         return 1;
     }

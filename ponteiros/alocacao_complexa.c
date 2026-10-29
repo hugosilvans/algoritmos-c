@@ -1,66 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct ponto
-{
-  int x;
-  float y;  
-} ponto;
 
+typedef struct {
+    double x, y;
+} Ponto;
 
-int main (int argc, char* argv[]){
-
-    int qtd_linhas = 0;
-    int x, soma_x;
-    float y, media_x, media_y, soma_y;
-    Ponto *numeros;
- 
-    FILE *arq = fopen("dados_regrassao.csv", "r");
-
-    if(arq == NULL){
-        printf("erro ao abrir arquivo");
+int main(void) {
+    FILE *arquivo = fopen("dados_regressao.csv", "r");
+    if (!arquivo)
+        return 1;
+    size_t quantidade = 0;
+    double x, y;
+    int leitura;
+    while ((leitura = fscanf(arquivo, "%lf,%lf", &x, &y)) == 2)
+        quantidade++;
+    if (leitura != EOF || quantidade < 2) {
+        fclose(arquivo);
         return 1;
     }
-
-    while(fscanf(arq, "%d,%f", &x, &y) != EOF)
-    {
-    qtd_linhas++;                
+    Ponto *pontos = calloc(quantidade, sizeof *pontos);
+    if (!pontos) {
+        fclose(arquivo);
+        return 1;
     }
-
-    numeros = malloc(sizeof(ponto) * qtd_linhas); //alocação de memória, manipula o local da memória
-
-    printf("qtd_linhas = %d\n", qtd_linhas);
-
-    if(numeros != NULL){
-        int i = 0;
-        fseek(arq, 0, SEEK_SET); // coloca o cursor no início
-        soma_x = 0;
-        soma_y = 0;
-        while(fscanf(arq, "%d,%f", &x, &y) != EOF)
-        {
-            numeros[i].x = x;
-            numeros[i].y = y;
-            soma_x += x;
-            soma_y += y;
-            i++;
+    rewind(arquivo);
+    double somaX = 0, somaY = 0;
+    for (size_t i = 0; i < quantidade; i++) {
+        if (fscanf(arquivo, "%lf,%lf", &pontos[i].x, &pontos[i].y) != 2) {
+            free(pontos);
+            fclose(arquivo);
+            return 1;
         }
-        media_x = soma_x / qtd_linhas;
-        media_y = soma_y / qtd_linhas;
+        somaX += pontos[i].x;
+        somaY += pontos[i].y;
     }
-
-    float inclinacao_dividendo = 0;
-    float inclinacao_divisor = 0;
-
-    for(int i = 0; i < qtd_linhas; i++){
-        inclinacao_dividendo += (numeros[i].x - media_x) * (numeros[i].y - media_y);
-        inclinacao_divisor += (numeros[i].x - media_x) * (numeros[i].x - media_x); 
+    fclose(arquivo);
+    double mediaX = somaX / quantidade, mediaY = somaY / quantidade;
+    double numerador = 0, denominador = 0;
+    // Regressão linear exige variação em x para que a divisão esteja definida.
+    for (size_t i = 0; i < quantidade; i++) {
+        double desvioX = pontos[i].x - mediaX;
+        numerador += desvioX * (pontos[i].y - mediaY);
+        denominador += desvioX * desvioX;
     }
-
-    float a = inclinacao_dividendo / inclinacao_divisor;
-    float b = media_y - (a*media_x);
-
-    print("%.2fx + %.2f", a, b);
-
-    fclose(arq);
-
+    free(pontos);
+    if (denominador == 0)
+        return 1;
+    double a = numerador / denominador, b = mediaY - a * mediaX;
+    printf("%.2fx + %.2f\n", a, b);
     return 0;
-}   
+}

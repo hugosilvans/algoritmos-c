@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+node_modules/
+__pycache__/
+*.py[cod]
+*.class
+**/target/
+.env
+.env.*
+!.env.example
+dist/
+.angular/

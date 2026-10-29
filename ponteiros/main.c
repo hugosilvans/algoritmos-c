@@ -1,32 +1,19 @@
 #include <stdio.h>
 
-#define MAX 255
-
-//GLOBAL
 int y = 1;
 
-void incrementaX(int *x){
-    //LOCAL
-    int x = 1;
-    while (x < 5)
-    {
+void incrementaX(int *valor) {
+    // O ponteiro permite alterar a variável do chamador, não uma cópia local.
+    for (int contador = 1; contador < 5; contador++) {
         y++;
-        *x = 11;
+        *valor = 11;
     }
-
 }
 
-int main(int argc, char* argv[]){
-
-    int z = 1;
-    int w = 2;
+int main(void) {
+    int z = 1, w = 2;
     incrementaX(&z);
-
-    printf("y = %d\n", y);
-    printf("z = %d", z);
-
-    printf("*z = %p", &z);
-    printf("*w = %p", &w);
+    printf("y = %d\nz = %d\n", y, z);
+    printf("&z = %p\n&w = %p\n", (void *)&z, (void *)&w);
     return 0;
-
 }
