@@ -34,10 +34,6 @@ gcc -std=c11 funcao/maior.c -o maior
 ./maior 4 9 2
 ```
 
-## Guia do código
-
-Consulte [GUIA_CODIGO.md](GUIA_CODIGO.md) para localizar os módulos, entender as convenções e estudar as alterações.
-
 ## Verificação dos exercícios C/C++
 
 Com Python, GCC e G++ disponíveis, execute `python scripts/verificar_sintaxe.py`. A verificação trata cada fonte separadamente; ela não substitui a execução de exemplos nem a compilação dos projetos Java.
